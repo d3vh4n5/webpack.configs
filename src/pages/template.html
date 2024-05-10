@@ -1,9 +1,12 @@
+<!-- ESTE TEMPLATE ES PARA HtmlWebpackPlugin -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- Centered viewport --> 
 <link
 rel="stylesheet"
@@ -12,6 +15,9 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
 </head>
 <body>
     <header-component></header-component>
-    <h1>Index</h1>
+    <h1><%= htmlWebpackPlugin.options.title %></h1>
+    <div id="app">
+        <!-- Aquí irá Vue -->
+    </div>
 </body>
 </html>

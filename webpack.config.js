@@ -2,10 +2,20 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader')
+
+//      Loaders
 
 const babelRoule = {
     test: /\.js$/,
     loader: 'babel-loader',
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-syntax-optional-chaining']
+}
+
+const vueRoule = {
+    test: /\.vue$/,
+    loader: 'vue-loader'
 }
 
 const cssRoule = {
@@ -24,15 +34,18 @@ const imageRule = {
     },
 }
 
+
+// Webpack
+
 module.exports = (env, argv) => {
     const {mode} = argv
     const isProduction = mode === 'production'
     return {
         entry: {
-            main: './src/main.js',
-            index: './src/index.js',
-            about: './src/about.js',
-            contact: './src/contact.js',
+            main: './src/index.js',
+            home: './src/modules/home.js',
+            about: './src/modules/about.js',
+            contact: './src/modules/contact.js',
         },
         output: {
             filename: isProduction 
@@ -41,20 +54,27 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, 'build')
         },
         plugins: [
+            new VueLoaderPlugin(),
             new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
+                title: 'Home',
                 filename: 'index.html',
-                template: 'src/pages/index.html',
-                chunks: ['main', 'index']
+                // template: 'src/pages/index.html',
+                template: 'src/pages/template.html',
+                chunks: ['main', 'home']
             }),
             new HtmlWebpackPlugin({
+                title: 'About',
                 filename: 'about.html',
-                template: './src/pages/about.html',
+                // template: './src/pages/about.html',
+                template: './src/pages/template.html',
                 chunks: ['main', 'about']
             }),
             new HtmlWebpackPlugin({
+                title: 'Contact',
                 filename: 'contact.html',
-                template: './src/pages/contact.html',
+                // template: './src/pages/contact.html',
+                template: './src/pages/template.html',
                 chunks: ['main', 'contact']
             }),
             new CopyWebpackPlugin({
@@ -67,7 +87,8 @@ module.exports = (env, argv) => {
             rules: [
                 // babelRoule,
                 cssRoule,
-                imageRule
+                imageRule,
+                vueRoule,
             ]
         },
         devServer: {
