@@ -4,6 +4,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
 
+const EXTENSION = 'html'
+// const EXTENSION = 'ejs' // Recordar usar el archivo template.ejs con su extención ejs para que funcione
+
 //      Loaders
 
 const babelRoule = {
@@ -11,6 +14,18 @@ const babelRoule = {
     loader: 'babel-loader',
     presets: ['@babel/preset-env'],
     plugins: ['@babel/plugin-syntax-optional-chaining']
+}
+
+const ejsRoule = {
+    test: /\.ejs$/,
+    loader: 'ejs-loader',
+    options: {
+        esModule: false
+    }
+}
+const ejsTemplateRoule = {
+    test: /\.ejs$/,
+    use: 'raw-loader'
 }
 
 const vueRoule = {
@@ -49,7 +64,7 @@ module.exports = (env, argv) => {
         },
         output: {
             filename: isProduction 
-                ? '[name].[contenthash].bundle.js' // crea un archivo nuevo con hash distinto cada build para controlar el cache
+                ? 'js/[name].[contenthash].bundle.js' // crea un archivo nuevo con hash distinto cada build para controlar el cache
                 :'[name].js',
             path: path.resolve(__dirname, 'build')
         },
@@ -58,24 +73,33 @@ module.exports = (env, argv) => {
             new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 title: 'Home',
-                filename: 'index.html',
+                filename: 'index.'+ EXTENSION,
                 // template: 'src/pages/index.html',
-                template: 'src/pages/template.html',
-                chunks: ['main', 'home']
+                template: 'src/pages/template.'+ EXTENSION,
+                chunks: ['main', 'home'],
+                // templateParameters: { // Si evaluo el ejs puedo usar estas variables
+                //     user: "Carlitos Testy"
+                // }
             }),
             new HtmlWebpackPlugin({
                 title: 'About',
-                filename: 'about.html',
+                filename: 'pages/about.'+ EXTENSION,
                 // template: './src/pages/about.html',
-                template: './src/pages/template.html',
-                chunks: ['main', 'about']
+                template: './src/pages/template.'+ EXTENSION,
+                chunks: ['main', 'about'],
+                // templateParameters: { // Si evaluo el ejs puedo usar estas variables
+                //     user: "Carlitos Testy"
+                // }
             }),
             new HtmlWebpackPlugin({
                 title: 'Contact',
-                filename: 'contact.html',
+                filename: 'pages/contact.'+ EXTENSION,
                 // template: './src/pages/contact.html',
-                template: './src/pages/template.html',
-                chunks: ['main', 'contact']
+                template: './src/pages/template.'+ EXTENSION,
+                chunks: ['main', 'contact'],
+                // templateParameters: { // Si evaluo el ejs puedo usar estas variables
+                //     user: "Carlitos Testy"
+                // }
             }),
             new CopyWebpackPlugin({
                 patterns: [
@@ -89,6 +113,8 @@ module.exports = (env, argv) => {
                 cssRoule,
                 imageRule,
                 vueRoule,
+                // ejsRoule, // Este evalúa el ejs
+                // ejsTemplateRoule, // Este te permite hacer templates de ejs
             ]
         },
         devServer: {

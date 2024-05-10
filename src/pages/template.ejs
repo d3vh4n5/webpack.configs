@@ -1,0 +1,31 @@
+<!-- ESTE TEMPLATE ES PARA HtmlWebpackPlugin -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- Centered viewport --> 
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+/>
+</head>
+<body>
+    <header-component></header-component>
+    <h1><%= htmlWebpackPlugin.options.title %></h1>
+    <!-- <div>
+        <h3>Prueba de ejs</h3>
+        <% if (user) { %>
+            <h1>Welcome <%= user.name %>!</h1>
+        <% } else { %>
+            <h1>Welcome Guest!</h1>
+        <% } %>
+    </div> -->
+    <div id="app">
+        <!-- Aquí irá Vue -->
+    </div>
+</body>
+</html>

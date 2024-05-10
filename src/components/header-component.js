@@ -5,13 +5,13 @@ class HeaderComponent extends HTMLElement{
             <nav>
                 <ul>
                     <li>
-                        <a href='index.html'>Home</a>
+                        <a href='/index.html'>Home</a>
                     </li>
                     <li>
-                        <a href='about.html'>About</a>
+                        <a href='/pages/about.html'>About</a>
                     </li>
                     <li>
-                        <a href='contact.html'>Contact</a>
+                        <a href='/pages/contact.html'>Contact</a>
                     </li>
                 </ul>
             </nav>
