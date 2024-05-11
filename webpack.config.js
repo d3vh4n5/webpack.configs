@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 const EXTENSION = 'html'
 // const EXTENSION = 'ejs' // Recordar usar el archivo template.ejs con su extención ejs para que funcione
@@ -106,6 +108,13 @@ module.exports = (env, argv) => {
                     { from: 'public', to: '' },
                 ],
             }),
+            // Carga las variables de entorno desde el archivo .env
+            new Dotenv(),
+
+            // Define las variables de entorno para usar en tiempo de compilación
+            // new webpack.DefinePlugin({
+            // 'process.env.API_URL': JSON.stringify(process.env.API_URL),
+            // }),
         ],
         module: {
             rules: [
